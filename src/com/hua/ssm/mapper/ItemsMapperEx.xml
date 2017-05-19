@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hua.ssm.mapper.ItemsMapperEx" >
+
+   <!-- 定义商品查询的sql片段，就是商品查询条件 -->
+   <sql id="query_items_where">
+   	
+   	
+   		<if test="itemsEx!=null">
+   			<if test="itemsEx.name!=null and itemsEx.name!=''">
+   				items.name LIKE '%${itemsCustom.name}%'
+   			</if>
+   		</if>
+	
+   </sql>
+  	
+  	<!-- 商品列表查询 -->
+  	<!-- parameterType传入包装对象(包装了查询条件)
+  		resultType建议使用扩展对象
+  	 -->
+  	<select id="findItemsList" parameterType="com.hua.ssm.po.ItemsEx"
+  		 resultType="com.hua.ssm.po.ItemsEx">
+  		SELECT items.* FROM items  
+  		<where>
+  			<include refid="query_items_where"></include>
+  		</where>
+  	</select>
+  	
+</mapper>
